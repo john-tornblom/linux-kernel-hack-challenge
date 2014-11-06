@@ -5,7 +5,7 @@
 #include "cache.h"
 
 
-void test_check(int doIt) {
+static void test_check(int doIt) {
   if (doIt) {
     time_A60Hz_Initialize();
 
@@ -17,7 +17,7 @@ void test_check(int doIt) {
 }
 
 
-void run_tests(void) {
+static void run_tests(void) {
   test_check(1);
 }
 
