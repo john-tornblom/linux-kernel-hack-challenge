@@ -21,7 +21,7 @@ int  STOP_PROFILING(uint64_t* Measured_Time_US) {
   return 0;
 }
 
-__attribute__((constructor)) static void prf_constructor (void) {
+__attribute__((constructor(102))) static void prf_constructor (void) {
   fd = 1;
 }
 __attribute__((destructor)) static void prf_destructor (void) {

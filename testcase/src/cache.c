@@ -5,23 +5,24 @@
 #include "cache.h"
 
 #define PROC_PATH "/proc/Invalidate_L1"
-static int fd;
+static FILE *pFile;
 
 
 void INVALIDATE_L1(void) {
-
+  fprintf(pFile, "%d", 1);
 }
 
 
-__attribute__((constructor)) static void cache_constructor (void) {
-  fd = open(PROC_PATH, O_WRONLY);
-  if(fd < 0) {
+__attribute__((constructor(102))) static void cache_constructor (void) {
+  pFile = fopen("/proc/Invalidate_L1", "w");
+  if(!pFile) {
     perror("testcase: Unable to open "PROC_PATH);
   }
 }
 
 __attribute__((destructor)) static void cache_destructor (void) {
-  if(fd >= 0) {
-    close(fd);
+  if(pFile) {
+    fclose(pFile);
   }
 }
+
