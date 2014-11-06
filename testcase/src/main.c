@@ -19,15 +19,6 @@ static void test_check(int doIt) {
 }
 
 
-__attribute__((constructor(101))) static void main_constructor(void) {
-  if(mkdir("/proc", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-    printf("Failed to create directory '/proc'\n");
-
-  if(mount(NULL, "/proc", "proc", 0, NULL) != 0)
-    printf("Failed to mount /proc\n");
-}
-
-
 static void run_tests(void) {
   test_check(1);
 }
@@ -41,3 +32,11 @@ int main() {
   return 0;
 }
 
+
+__attribute__((constructor(101))) static void main_constructor(void) {
+  if(mkdir("/proc", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+    printf("Failed to create directory '/proc'\n");
+
+  if(mount(NULL, "/proc", "proc", 0, NULL) != 0)
+    printf("Failed to mount /proc\n");
+}
