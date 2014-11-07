@@ -21,6 +21,13 @@ source "arch/powerpc/platforms/44x/Kconfig"
 source "arch/powerpc/platforms/40x/Kconfig"
 source "arch/powerpc/platforms/amigaone/Kconfig"
 
+
+config L1_INVALIDATION
+	bool "Exspose L1 Cache Invalidation"
+	default y
+	help
+	  This option enables support for invalidating the l1 cache by writing to /proc/Invalidate_L1
+
 config PPC_NATIVE
 	bool
 	depends on 6xx || PPC64
