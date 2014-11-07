@@ -16,7 +16,7 @@ $ make initrd
 
 Test
 ===========================
-Execute the eniorment and save stdout to a log file
+Execute the testcase in a qemu enviorment, and save stdout to a log file
 ```
 $ make test > test_results.log
 ```
