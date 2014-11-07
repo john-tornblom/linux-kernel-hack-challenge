@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
+#include <sys/reboot.h>
 
 #include "time_a60hz.h"
 #include "cache.h"
@@ -27,8 +28,7 @@ static void run_tests(void) {
 int main() {
   run_tests();
 
-  printf("Done, sleeping\n");
-  sleep(9999);
+  reboot(RB_AUTOBOOT);
   return 0;
 }
 

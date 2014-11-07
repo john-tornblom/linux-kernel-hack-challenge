@@ -4,7 +4,7 @@ KERNEL := $(LINUX)/arch/powerpc/boot/uImage
 CONFIG := $(LINUX)/arch/powerpc/configs/mpc85xx_defconfig
 
 QEMU      := qemu-system-ppc
-QEMU_ARGS := -kernel $(KERNEL) -initrd $(INITRD) -nographic -serial stdio -append "console=ttyS0"
+QEMU_ARGS := -kernel $(KERNEL) -initrd $(INITRD) -nographic -no-reboot -serial stdio -append "console=ttyS0"
 QEMU_ARGS += -M mpc8544ds -cpu e500v2
 
 all: $(INITRD) $(KERNEL)
@@ -30,6 +30,7 @@ menuconfig:
 
 test:
 	$(QEMU) $(QEMU_ARGS)
+	@stty sane
 
 clean:
 	make -C testcase clean
