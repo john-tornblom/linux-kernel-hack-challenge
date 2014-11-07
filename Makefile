@@ -1,6 +1,7 @@
 INITRD := initrd.cpio.gz
-KERNEL := linux/arch/powerpc/boot/uImage
-CONFIG := linux/arch/powerpc/configs/mpc85xx_defconfig
+LINUX  := linux-2.6.32
+KERNEL := $(LINUX)/arch/powerpc/boot/uImage
+CONFIG := $(LINUX)/arch/powerpc/configs/mpc85xx_defconfig
 
 QEMU      := qemu-system-ppc
 QEMU_ARGS := -kernel $(KERNEL) -initrd $(INITRD) -serial stdio -append "console=ttyS0"
@@ -17,23 +18,21 @@ $(INITRD):
 	rm init
 
 $(KERNEL):
-	git submodule sync
-	git submodule update --init linux
-	make -C linux ARCH=powerpc CROSS_COMPILE=powerpc-linux-gnu-
+	make -C $(LINUX) ARCH=powerpc CROSS_COMPILE=powerpc-linux-gnu-
 
 initrd: $(INITRD)
 
 kernel: $(KERNEL)
 
 menuconfig:
-	cp $(CONFIG) linux/.config
-	make -C linux ARCH=powerpc CROSS_COMPILE=powerpc-linux-gnu- menuconfig
+	cp $(CONFIG) $(LINUX)/.config
+	make -C $(LINUX) ARCH=powerpc CROSS_COMPILE=powerpc-linux-gnu- menuconfig
 
 test:
 	$(QEMU) $(QEMU_ARGS)
 
 clean:
 	make -C testcase clean
-	make -C linux clean
-	rm -rf linux/.config
+	make -C $(LINUX) clean
+	rm -rf $(LINUX)/.config
 	rm -rf $(INITRD)
